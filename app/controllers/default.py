@@ -4,12 +4,14 @@ from app import app
 #faz a rota da pagina 
 
 
-@app.route("/index/<user>")
-@app.route("/", defaults={"user":None})
-def index(user):
-    return render_template('index.html', user=user)
+@app.route("/index")
+@app.route("/")
+def index():
+    return render_template('index.html')
 
-
+@app.route("/login")
+def login():
+    return render_template('base.html')
 '''
 @app.route("/teste")
 @app.route("/teste/<nome>")
