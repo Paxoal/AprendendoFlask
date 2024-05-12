@@ -1,25 +1,28 @@
 from flask import render_template
 from app import app
 
-#faz a rota da pagina 
-
+from app.models.forms import LoginForm
 
 @app.route("/index")
 @app.route("/")
 def index():
     return render_template('index.html')
 
-@app.route("/login")
+@app.route("/login", methods=["GET","POST"])
 def login():
-    return render_template('base.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        print(form.username.data)
+        print(form.password.data)
+    return render_template('login.html', form=form)
 '''
 @app.route("/teste")
 @app.route("/teste/<nome>")
 def teste(nome=None):
     if nome:
         return "Olá, %s!" % nome
-    else:
-        return "Olá, usuário!"
+        else:
+            return "Olá, usuário!"
     
 @app.route("/inteiro")
 @app.route("/inteiro/<int:inteiro>")
