@@ -1,13 +1,16 @@
+from flask import render_template
 from app import app
 
 #faz a rota da pagina 
 
-@app.route("/home")
-@app.route("/index")
-@app.route("/")
-def index():
-    return "Hello world!"
 
+@app.route("/index/<user>")
+@app.route("/", defaults={"user":None})
+def index(user):
+    return render_template('index.html', user=user)
+
+
+'''
 @app.route("/teste")
 @app.route("/teste/<nome>")
 def teste(nome=None):
@@ -27,3 +30,4 @@ def inteiro(inteiro=None):
 @app.route("/met", methods=['GET'])
 def met():
     return "Olá!"
+'''

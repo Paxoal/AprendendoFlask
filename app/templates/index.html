@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>Xclone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='csc/bootstrap.mim.css')}}">
+
+</head>
+<body>
+    {% if user %}
+    <h1>Bem-Vindo ao Xclone, {{ user }}</h1>
+    {% else %}
+    <h1>Bem-Vindo ao Xclone</h1>
+    {% endif %}
+
+    <script srs="{{url_for('static', filename='js/bootstrap.mim.js')}}"></script>
+</body>
+</html>
