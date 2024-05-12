@@ -4,15 +4,12 @@ from flask_migrate import Migrate
 
 #contém todo flash
 app = Flask(__name__)
+app.config.from_object("config")
 
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///storage.db'
 
 db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
-
 
 from app.controllers import default
 
