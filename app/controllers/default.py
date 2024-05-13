@@ -1,6 +1,7 @@
-from flask import render_template
-from app import app
-
+from flask import redirect, render_template, flash, url_for
+from flask_login import login_user, logout_user
+from app import app, db
+from app.models.tables import User
 from app.models.forms import LoginForm
 
 @app.route("/index")
@@ -12,18 +13,31 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        print(form.username.data)
-        print(form.password.data)
-    return render_template('login.html', form=form)
-'''
-@app.route("/teste")
-@app.route("/teste/<nome>")
-def teste(nome=None):
-    if nome:
-        return "Olá, %s!" % nome
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and user.password == form.password.data:
+            login_user(user)
+            flash("Logged in")
+            return redirect(url_for("index"))
         else:
-            return "Olá, usuário!"
-    
+            flash("Invalid login")
+    return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    flash("Logged out")
+    return redirect(url_for("login"))
+
+'''
+@app.route("/teste/<info>")
+@app.route("/teste", defaults={"info": None})
+def teste(info):
+    user = User("Paschoal","1234", "Arthur Paschoal", "arthurpaschoal500@gmail.com")
+    print(user)
+    db.session.add(user)
+    db.session.commit()
+    return "ok"
+
 @app.route("/inteiro")
 @app.route("/inteiro/<int:inteiro>")
 def inteiro(inteiro=None):
